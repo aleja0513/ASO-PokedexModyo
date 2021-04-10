@@ -18,7 +18,7 @@ public class PokeApiController {
 	PokeService service;
 	
 	@GetMapping("/getAllPokeList")
-	public List<Pokemon> getPokeList(@RequestParam(defaultValue = "20") String limit, @RequestParam(required=false) String offSet) {
+	public List<Pokemon> getPokeList(@RequestParam(defaultValue = "20") String limit, @RequestParam(defaultValue = "0") String offSet) {
 		return service.getAll(limit, offSet);
 	}
 	
