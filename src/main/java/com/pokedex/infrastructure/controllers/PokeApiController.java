@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pokedex.application.usescases.adapters.PokeService;
 import com.pokedex.domain.models.Response;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 @RestController
 public class PokeApiController {
 	
@@ -26,7 +26,7 @@ public class PokeApiController {
 		return new ResponseEntity(res, res.getRespondeCode()==200?HttpStatus.OK:HttpStatus.NOT_FOUND );
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings("unchecked")
 	@GetMapping("/getPokemon/{name}")
 	public ResponseEntity<Response>  getPokeList(@PathVariable("name") String name) {
 		Response res =  service.getOne(name);
