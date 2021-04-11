@@ -15,7 +15,7 @@
 	<description>Challenge Modyo Pokedex</description>
 	<properties>
 		<java.version>11</java.version>
-		<tests.skip>true</tests.skip>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 	<dependencies>
 		<dependency>
