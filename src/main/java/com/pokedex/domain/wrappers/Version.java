@@ -1,10 +1,11 @@
 package com.pokedex.domain.wrappers;
 
-public class Specie {
+public class Version {
 	
-	private String name;
-	private String url;
-	
+    private String name;
+    private String url;
+    
+    
 	public String getName() {
 		return name;
 	}
@@ -17,7 +18,6 @@ public class Specie {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	
-
+    
+    
 }

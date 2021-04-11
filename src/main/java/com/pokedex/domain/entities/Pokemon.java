@@ -1,5 +1,6 @@
 package com.pokedex.domain.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,8 @@ public class Pokemon {
 	private List<String> types;
 	private List<String> abilities;
 	private String weight;
-	private Specie species;
+	private List<String> descriptions;
+	private List<String> evolutions;
 	
 	public String getName() {
 		return name;
@@ -47,18 +49,21 @@ public class Pokemon {
 	public void setWeight(String weight) {
 		this.weight = weight;
 	}
-	public Specie getSpecies() {
-		return species;
-	}
-	public void setSpecies(Specie species) {
-		this.species = species;
-	}
 	
+	public List<String> getDescriptions() {
+		return descriptions;
+	}
+	public void setDescriptions(List<String> descriptions) {
+		this.descriptions = descriptions;
+	}
+
 	public Pokemon (com.pokedex.domain.wrappers.Pokemon poke) {
 		
 		this.name = poke.getName();
 		this.photo = poke.getSprites().getFront_default();
 		this.weight = String.valueOf(poke.getWeight());
+		this.descriptions = new ArrayList<String>();
+		this.evolutions = new ArrayList<String>();
 		if(poke.getTypes() != null && poke.getTypes().size() > 0) {
 			this.types = poke.getTypes().stream().map(Type::getType).map(Type2::getName).collect(Collectors.toList());
 		}
@@ -67,9 +72,15 @@ public class Pokemon {
 			this.abilities = poke.getAbilities().stream().map(Ability::getAbility).map(Ability2::getName).collect(Collectors.toList());
 		}
 		
-		if(poke.getSpecies() != null ) {
-			//config Specie
-		}
+		
 	}
+	public List<String> getEvolutions() {
+		return evolutions;
+	}
+	public void setEvolutions(List<String> evolutions) {
+		this.evolutions = evolutions;
+	}
+
+
 
 }

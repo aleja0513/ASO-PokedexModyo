@@ -1,6 +1,7 @@
 package com.pokedex;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.runner.RunWith;
@@ -22,8 +23,14 @@ public class PokeRestControllerTest {
 	private MockMvc mvc;
 	 
 	@Test
-	public void prueba() throws Exception {
+	public void getAllPokeList() throws Exception {
 	    mvc.perform(get("/getAllPokeList?limit=20&offset=0").contentType(MediaType.APPLICATION_JSON))
+	      .andExpect(status().isOk());
+	}
+	
+	@Test
+	public void getPokemonName() throws Exception {
+	    mvc.perform(post("/getPokemonName").contentType(MediaType.APPLICATION_JSON))
 	      .andExpect(status().isOk());
 	}
 }
