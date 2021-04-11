@@ -1,7 +1,7 @@
 package com.pokedex.application.usescases.getpoke;
 
-import com.pokedex.domain.entities.Pokemon;
+import com.pokedex.domain.models.Response;
 
 public interface IPokeGetOne {
-	public Pokemon getOne(String names);
+	public Response getOne(String names);
 }

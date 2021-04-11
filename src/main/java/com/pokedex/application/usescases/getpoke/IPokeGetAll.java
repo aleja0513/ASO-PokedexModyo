@@ -1,12 +1,9 @@
 package com.pokedex.application.usescases.getpoke;
 
-import java.util.List;
-
-import com.pokedex.domain.entities.Pokemon;
-import com.pokedex.domain.entities.Root;
+import com.pokedex.domain.models.Response;
 
 public interface IPokeGetAll {
 	
-	public Root getAll(String limit, String offSet);
+	public Response getAll(String limit, String offSet);
 	
 }

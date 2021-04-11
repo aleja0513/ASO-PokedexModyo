@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pokedex.domain.exceptions.ServiceNotAvailable;
 import com.pokedex.domain.wrappers.Pokemon;
 import com.pokedex.domain.wrappers.Specie;
 import com.pokedex.domain.wrappers.SpecieDetail;
@@ -32,7 +33,8 @@ public class PokeRestClientModel {
 	private Environment env;
 	
 		
-	public List<String> getPokeList(String limit, String offSet) {
+	public List<String> getPokeList(String limit, String offSet) throws ServiceNotAvailable {
+		
 		List<String> retorno = new ArrayList<String>();
 		
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(env.getProperty("app.apiurl")).queryParam("limit",limit).queryParam("offset",offSet).build();
@@ -51,6 +53,9 @@ public class PokeRestClientModel {
 	        
 			retorno = actualObj.get("results").findValuesAsText("url");
 			retorno.add(actualObj.get("count").asText());
+	    }else {
+	    	
+	    	throw new ServiceNotAvailable("Service not available");
 	    }
 	    
 		return retorno;
@@ -58,7 +63,8 @@ public class PokeRestClientModel {
 	
 
 	
-	public Pokemon getPokemon(String url) {
+	public Pokemon getPokemon(String url) throws ServiceNotAvailable{
+		
 		Pokemon objPokemonWrapper = null;
 		ResponseEntity<Pokemon>  response = restTemplate.exchange(url, 
 																HttpMethod.GET,
@@ -66,12 +72,16 @@ public class PokeRestClientModel {
 																new ParameterizedTypeReference<Pokemon>() {});
 		 if (response.getStatusCode() == HttpStatus.OK) {
 			 objPokemonWrapper = response.getBody();
+		 }else {
+			 
+			 throw new ServiceNotAvailable("Service not available"); 
 		 }
 		
 		 return objPokemonWrapper;
 	}
 	
-	public Pokemon getPokemonByName(String name) {
+	public Pokemon getPokemonByName(String name) throws ServiceNotAvailable{
+		
 		Pokemon objPokemonWrapper = null;
 		ResponseEntity<Pokemon>  response = restTemplate.exchange(env.getProperty("app.apiurl")+name, 
 																HttpMethod.GET,
@@ -79,12 +89,17 @@ public class PokeRestClientModel {
 																new ParameterizedTypeReference<Pokemon>() {});
 		 if (response.getStatusCode() == HttpStatus.OK) {
 			 objPokemonWrapper = response.getBody();
+		 }else {
+			 
+			 throw new ServiceNotAvailable("Service not available"); 
 		 }
 		
 		 return objPokemonWrapper;
+		 
 	}
 	
 	public SpecieDetail getSpecie(String url) {
+		
 		SpecieDetail objSpecieWrapper = null;
 		ResponseEntity<SpecieDetail>  response = restTemplate.exchange(url, 
 																HttpMethod.GET,
@@ -99,6 +114,7 @@ public class PokeRestClientModel {
 	
 	
 	public List<Specie> getEvolution(String url) {
+		
 		List<Specie> retorno = new ArrayList<Specie>();
 		var response =  restTemplate.exchange(url, HttpMethod.GET, null,  String.class);
 		
